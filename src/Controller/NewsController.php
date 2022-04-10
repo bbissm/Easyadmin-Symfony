@@ -115,4 +115,9 @@ class NewsController extends BaseController
 
         return $this->redirectToRoute('news');
     }
+
+    public static function test()
+    {
+        return self::class;
+    }
 }

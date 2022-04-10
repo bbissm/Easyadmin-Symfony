@@ -4,14 +4,24 @@
 {% block body %}
     <section>
         <div class="inner-container">
-            <pre>
-                {{ dump(page) }}
-                {% for menuItem in menu %}
-                    {{ dump(menuItem.title) }}
-                {% endfor %}
-            </pre>
             <h1>{{ page.title }}</h1>
+            <div id="test" data-text="Ih liebe mis chlises bebe <3"></div>
             <a href="{{ path('news') }}">Link zu News</a>
         </div>
     </section>
+    <script>
+        let element = document.getElementById('test');
+        let string = Array.from(element.dataset.text);
+        setTimeout(function() {
+            string.forEach(s => {
+                element = toString(s)
+            })
+        },2000);
+        for(var i = 0; i < 10; i++){
+            setTimeout(function(){
+                console.log(i);
+            },i * 1000)
+        }
+    </script>
 {% endblock %}
+
