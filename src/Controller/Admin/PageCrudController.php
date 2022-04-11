@@ -51,7 +51,6 @@ class PageCrudController extends AbstractCrudController
         }
         return [
             IdField::new('id')->hideOnForm()->setPermission('ROLE_ADMIN'),
-            BooleanField::new('active'),
             TextField::new('title'),
             ChoiceField::new('template')->setChoices($templates)->setPermission('ROLE_ADMIN'),
             BooleanField::new('hide_menu'),

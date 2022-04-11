@@ -2,11 +2,12 @@
 
 namespace App\Controller;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Page;
 use Symfony\Component\HttpFoundation\RequestStack;
-
+use Doctrine\ORM\Repository\RepositoryFactory;
 
 class BaseController extends AbstractController
 {
@@ -29,10 +30,10 @@ class BaseController extends AbstractController
      * Zuständig für Twig response
      * addiert variablen zu den jeweiligen gerenderten templates
      **/
-    public function render(string $view, array $parameters = [], Response $response = null): Response
+    public function render(string $view, array $parameters = [], Response $response = null, ManagerRegistry $doctrine = null): Response
     {
-        $pages = $this->getDoctrine()->getRepository(Page::class)->findBy(['active'=> 1, 'hide_menu' => false]);
-        $page = $this->getDoctrine()->getRepository(Page::class)->findOneBy(['active'=> 1, 'route' => $this->pageInfos['_route']]);
+        $pages = $doctrine->getRepository(Page::class)->findBy(['hide_menu' => false]);
+        $page = $doctrine->getRepository(Page::class)->findOneBy(['route' => $this->pageInfos['_route']]);
         $this->pageInfos['page'] = $page;
         $this->pageInfos['menu'] = $pages;
 

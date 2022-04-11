@@ -1,3 +1,4 @@
+
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php
@@ -7,20 +8,10 @@
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
-.idea
-/.idea
-/.idea/*
+.env
 ###> symfony/webpack-encore-bundle ###
 /node_modules/
 /public/build/
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
-
-symfony.lock
-symfony.iml
-migrations
-migrations/*
-php.xml
-misc.xml
-.env

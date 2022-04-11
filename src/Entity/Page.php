@@ -38,11 +38,6 @@ class Page
     private $controller;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $active;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $route;
@@ -98,18 +93,6 @@ class Page
     public function setController(?string $controller): self
     {
         $this->controller = $controller;
-
-        return $this;
-    }
-
-    public function getActive(): ?bool
-    {
-        return $this->active;
-    }
-
-    public function setActive(?bool $active): self
-    {
-        $this->active = $active;
 
         return $this;
     }

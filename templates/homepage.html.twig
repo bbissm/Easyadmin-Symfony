@@ -5,23 +5,30 @@
     <section>
         <div class="inner-container">
             <h1>{{ page.title }}</h1>
-            <div id="test" data-text="Ih liebe mis chlises bebe <3"></div>
+            <div class="is-flex">
+                <div id="" class="is-size-3" data-text="Todo: Autocontroller zu Pages öasldhöafh dkshf jahsdökj fhöakdsj hföjasdh ökjhasd öfhödsjfhökj as"></div>
+            </div>
             <a href="{{ path('news') }}">Link zu News</a>
         </div>
     </section>
     <script>
         let element = document.getElementById('test');
         let string = Array.from(element.dataset.text);
-        setTimeout(function() {
-            string.forEach(s => {
-                element = toString(s)
+        let text = '';
+        if (element) {
+            string.forEach(function callback(value, index) {
+                setTimeout(() => {
+                    element.insertAdjacentText('beforeend', value);
+                },index*150);
             })
-        },2000);
-        for(var i = 0; i < 10; i++){
-            setTimeout(function(){
-                console.log(i);
-            },i * 1000)
+
         }
+
+        /*setInterval(function () {
+            let ele = document.getElementById('separator');
+            ele.style.visibility = (ele.style.visibility == 'hidden' ? '' : 'hidden');
+
+        }, 300);*/
     </script>
 {% endblock %}
 
