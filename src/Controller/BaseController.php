@@ -16,12 +16,13 @@ class BaseController extends AbstractController
     /**
      * zuständig für globale Variable für restliche controller
      **/
-    public function __construct(RequestStack $requestStack)
+    public function __construct(RequestStack $requestStack,ManagerRegistry $doctrine)
     {
         // set custom attributes
         $requestStack->getCurrentRequest()->attributes->set('pageParams', [
             'eintrage'=>[0=>'Martin',1=>'Andreas'],
         ]);
+        $this->doctrine = $doctrine;
         // get all attributes for global usage
         $this->pageInfos = $requestStack->getCurrentRequest()->attributes->all();
     }
@@ -30,10 +31,10 @@ class BaseController extends AbstractController
      * Zuständig für Twig response
      * addiert variablen zu den jeweiligen gerenderten templates
      **/
-    public function render(string $view, array $parameters = [], Response $response = null, ManagerRegistry $doctrine = null): Response
+    public function render(string $view, array $parameters = [], Response $response = null): Response
     {
-        $pages = $doctrine->getRepository(Page::class)->findBy(['hide_menu' => false]);
-        $page = $doctrine->getRepository(Page::class)->findOneBy(['route' => $this->pageInfos['_route']]);
+        $pages = $this->doctrine->getRepository(Page::class)->findBy(['hide_menu' => false]);
+        $page = $this->doctrine->getRepository(Page::class)->findOneBy(['route' => $this->pageInfos['_route']]);
         $this->pageInfos['page'] = $page;
         $this->pageInfos['menu'] = $pages;
 

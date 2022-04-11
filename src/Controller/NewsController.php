@@ -3,7 +3,9 @@
 
 namespace App\Controller;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,14 +19,17 @@ use App\Form\NewsType;
  */
 class NewsController extends BaseController
 {
+    public function __construct(RequestStack $requestStack, ManagerRegistry $doctrine)
+    {
+        parent::__construct($requestStack, $doctrine);
+    }
+
     /**
      * @Route("/news", name="news")
      */
     public function list(Request $request): Response
     {
-        $news = $this->getDoctrine()
-            ->getRepository(News::class)
-            ->findAll();
+        $news = $this->doctrine->getRepository(News::class)->findAll();
 
         if (!$news) {
             throw $this->createNotFoundException(
@@ -62,7 +67,7 @@ class NewsController extends BaseController
             $news = $form->getData();
             // ... perform some action, such as saving the task to the database
             // for example, if Task is a Doctrine entity, save it!
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->doctrine->getManager();
             $entityManager->persist($news);
             $entityManager->flush();
 
@@ -90,7 +95,7 @@ class NewsController extends BaseController
 
             // ... perform some action, such as saving the task to the database
             // for example, if Task is a Doctrine entity, save it!
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->doctrine->getManager();
             $entityManager->persist($news);
             $entityManager->flush();
 
@@ -108,7 +113,7 @@ class NewsController extends BaseController
      */
     public function delete(int $id): Response
     {
-        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager = $this->doctrine->getManager();
         $news = $entityManager->getRepository(News::class)->find($id);
         $entityManager->remove($news);
         $entityManager->flush();
